@@ -5,7 +5,7 @@ import db.inicial.DAO.CourseDAO;
 import db.inicial.DAO.StudentDAO;
 import db.inicial.model.Course;
 import db.inicial.model.Student;
-import db.inicial.resources.Sign;
+import db.inicial.util.PrintUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -51,7 +51,7 @@ public class AppJDBC {
             menuOption = showMainMenu();
 
         }
-        Sign.drawSign("Goodbye!","-");
+        PrintUtil.drawSign("Goodbye!","-");
 
     }
 
@@ -79,7 +79,7 @@ public class AppJDBC {
             Scanner scan = new Scanner(System.in);
             courseMenuOpt = scan.nextInt();
             if (courseMenuOpt != 1){
-                Sign.drawSign("Main Menu", "-");
+                PrintUtil.drawSign("Main Menu", "-");
             } else {
                 categoryMenuOption = showCrudMenu("Course");
             }
@@ -207,7 +207,7 @@ public class AppJDBC {
             System.out.println("1) Continue working in this category 2) Return to main Menu");
             studentMenuOpt = scan.nextInt();
             if (studentMenuOpt != 1){
-                Sign.drawSign("Main Menu", "-");
+                PrintUtil.drawSign("Main Menu", "-");
             } else {
                 categoryMenuOption = showCrudMenu("Student");
             }
@@ -294,8 +294,8 @@ public class AppJDBC {
     }
 
     private static void welcomeMessage() {
-        Sign.drawSign("Welcome", "+");
-        Sign.drawSign(" Students, courses and enrollments database","");
+        PrintUtil.drawSign("Welcome", "+");
+        PrintUtil.drawSign(" Students, courses and enrollments database","");
         System.out.println();
 
     }

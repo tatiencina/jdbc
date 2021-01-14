@@ -1,6 +1,6 @@
-package db.inicial.resources;
+package db.inicial.util;
 
-public class Sign {
+public class PrintUtil {
     public static void drawSign(String signMessage, String symbol) {
         drawLine(signMessage.length(), symbol);
         System.out.println(signMessage.toUpperCase());
