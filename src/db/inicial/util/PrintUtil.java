@@ -16,4 +16,10 @@ public class PrintUtil {
         System.out.println();
 
     }
+
+    public static void printMessage(String message){
+        System.out.println(message);
+        System.out.println();
+
+    }
 }

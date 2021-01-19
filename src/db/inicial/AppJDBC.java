@@ -5,6 +5,7 @@ import db.inicial.DAO.CourseDAO;
 import db.inicial.DAO.StudentDAO;
 import db.inicial.model.Course;
 import db.inicial.model.Student;
+import db.inicial.util.InputUtil;
 import db.inicial.util.PrintUtil;
 
 import java.sql.Connection;
@@ -15,10 +16,11 @@ import java.util.Scanner;
 public class AppJDBC {
     public static void main(String[] args) {
         try {
+            InputUtil input = InputUtil.getInstance();
             Scanner scan = new Scanner(System.in);
             Connection connection = AdminDB.obtenerConexion();
             welcomeMessage();
-            int menuOption = showMainMenu();
+            int menuOption = showMainMenu(input);
             showCategoryMenu(scan, menuOption, connection);
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
@@ -122,7 +124,7 @@ public class AppJDBC {
         if(choice.equals("Y")){
             System.out.println("Type key word to find your course");
             String courseName = scan.next();
-            List<Course> courseList = CourseDAO.findByName(courseName, connection);
+            List<Course> courseList = CourseDAO.findBySimilarName(courseName, connection);
             for (Course course : courseList) {
                 System.out.println(course.getId() + ": " + course.getName() + " ");
             }
@@ -220,7 +222,6 @@ public class AppJDBC {
         System.out.print("Type the Id of the student you wish to delete from the database:");
         Scanner scan = new Scanner(System.in);
         int studentId = scan.nextInt();
-
         Student student = StudentDAO.findById(studentId, connection);
         System.out.println("Your are about to delete the student = " + student.getName() + " " +  student.getLastName());
         System.out.print("Confirm operation? (Y/N) -->");
@@ -286,10 +287,15 @@ public class AppJDBC {
         return scan.nextInt();
     }
 
-    private static int showMainMenu() {
+    private static int showMainMenu(InputUtil input) {
         System.out.println("Choose a category to work with");
         System.out.println("1)Students 2) Courses 3) Enrollments 4)Exit");
+        return input.getInt("Selection:");
+    }
+    private static int showMainMenu() {
         Scanner scan = new Scanner(System.in);
+        System.out.println("Choose a category to work with");
+        System.out.println("1)Students 2) Courses 3) Enrollments 4)Exit");
         return scan.nextInt();
     }
 

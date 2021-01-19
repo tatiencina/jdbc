@@ -33,23 +33,22 @@ public class CourseDAO {
     }
 
     public static int delete (int idCurso, Connection connection) throws SQLException {
-        PreparedStatement prepStmt = connection.prepareStatement("DELETE FROM COURSE WHERE ID = ?");
+        PreparedStatement prepStmt = connection.prepareStatement("DELETE FROM COURSE WHERE idcourse = ?");
         prepStmt.setInt(1, idCurso);
         return prepStmt.executeUpdate();
     }
 
     public static void update (String name, int idCurso, Connection connection) throws SQLException {
-        PreparedStatement prepStmt = connection.prepareStatement("UPDATE COURSE SET name = ? WHERE id = ?" );
+        PreparedStatement prepStmt = connection.prepareStatement("UPDATE COURSE SET name = ? WHERE idcourse = ?" );
         prepStmt.setString(1, name);
         prepStmt.setInt(2,idCurso);
         prepStmt.executeUpdate();
-
 
     }
 
 
     public static Course findById(int courseId, Connection connection) throws SQLException {
-        PreparedStatement prepStmt = connection.prepareStatement("SELECT NAME FROM COURSE WHERE ID = ?");
+        PreparedStatement prepStmt = connection.prepareStatement("SELECT NAME FROM COURSE WHERE idcourse = ?");
         prepStmt.setInt(1, courseId);
         ResultSet rs = prepStmt.executeQuery();
         Course course = null;
@@ -61,7 +60,7 @@ public class CourseDAO {
         }
         return course;
     }
-    public static List<Course> findByName(String name, Connection connection) throws SQLException {
+    public static List<Course> findBySimilarName(String name, Connection connection) throws SQLException {
         List<Course> courseList = new ArrayList<Course>();
         // String sql = "SELECT FROM CURSO WHERE NAME = ?";
         String sql = "SELECT * FROM COURSE WHERE NAME LIKE '%" + name + "%' ORDER BY NAME";
@@ -69,7 +68,6 @@ public class CourseDAO {
         PreparedStatement prepStmt = connection.prepareStatement(sql);
         //  prepStmt.setString(1,name);
         ResultSet rs = prepStmt.executeQuery();
-
         Course course = null;
         while (rs.next()){
             course = new Course (rs.getString(2));
@@ -82,4 +80,17 @@ public class CourseDAO {
     }
 
 
+    public static Course findByName(String name, Connection connection) throws SQLException {
+        String sql = "SELECT * FROM COURSE WHERE NAME = ?";
+        PreparedStatement prepStmt = connection.prepareStatement(sql);
+        prepStmt.setString(1,name);
+        ResultSet rs = prepStmt.executeQuery();
+        Course course = null;
+        while (rs.next()) {
+            course = new Course (rs.getString(2));
+            int courseId = rs.getInt(1);
+            course.setId(courseId);
+        }
+        return course;
+    }
 }

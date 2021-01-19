@@ -2,7 +2,7 @@ package db.inicial.model;
 
 public class Teacher {
 
-    private int idTeacher;
+    private int id;
     private String name;
     private String lastName;
 
@@ -11,12 +11,12 @@ public class Teacher {
         this.lastName = lastName;
     }
 
-    public int getIdTeacher() {
-        return idTeacher;
+    public int getId() {
+        return id;
     }
 
-    public void setIdTeacher(int idTeacher) {
-        this.idTeacher = idTeacher;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -33,5 +33,18 @@ public class Teacher {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    /*@Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }*/
+
+    public String toString() {
+        return String.format("ID: %s - Teacher: %s %s", id, name, lastName);
     }
 }
