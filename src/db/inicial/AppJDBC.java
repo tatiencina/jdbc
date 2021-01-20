@@ -249,7 +249,8 @@ public class AppJDBC {
         System.out.print("Confirm operation? (Y/N) -->");
         String choice = scan.next().toUpperCase();
         if(choice.equals("Y")){
-            StudentDAO.update(studentName, studentLastName, studentId, connection);
+            student = new Student (studentName, studentLastName);
+            StudentDAO.update(student, connection);
             System.out.println("Student updated");
         } else {
             System.out.println("Operation cancelled");

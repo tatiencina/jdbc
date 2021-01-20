@@ -1,6 +1,7 @@
 package db.inicial.DAO;
 
 import db.inicial.model.Student;
+import db.inicial.model.Teacher;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,11 +42,13 @@ public class StudentDAO {
         return prepStmt.executeUpdate();
     }
 
-    public static void update(String name, String lastName, int studentId, Connection connection) throws SQLException {
+
+    // actualizar objeto como parametro
+    public static void update(Student student, Connection connection) throws SQLException {
         PreparedStatement prepStmt = connection.prepareStatement("UPDATE STUDENT SET name = ? , lastname = ? WHERE ID = ?");
-        prepStmt.setInt(3, studentId);
-        prepStmt.setString(1, name);
-        prepStmt.setString(2, lastName);
+        prepStmt.setInt(3, student.getId());
+        prepStmt.setString(1, student.getName());
+        prepStmt.setString(2, student.getLastName());
         prepStmt.executeUpdate();
 
     }
@@ -65,5 +68,21 @@ public class StudentDAO {
         }
 
         return student;
+    }
+
+    public static Student findByNameAndLastName(String studentName, String studentLastName, Connection connection) throws SQLException {
+        String sql = "SELECT * FROM TEACHER WHERE NAME =? AND LASTNAME = ?";
+        PreparedStatement prepStmt = connection.prepareStatement(sql);
+        prepStmt.setString(1,studentName);
+        prepStmt.setString(2, studentLastName);
+        ResultSet rs = prepStmt.executeQuery();
+        Student student = null;
+        while (rs.next()) {
+            student = new Student (rs.getString(2), rs.getString(3));
+            int courseId = rs.getInt(1);
+            student.setId(courseId);
+        }
+        return student;
+
     }
 }
